@@ -1205,8 +1205,52 @@ bool CPlayerPlaylistBar::SelectFileInPlaylist(LPCTSTR filename)
     return false;
 }
 
+CString getTaggedFileName(CString filename, CString tag)
+{
+
+    CT2CA pszConvertedAnsiString(filename);
+    std::string _filename(pszConvertedAnsiString);
+
+    if (std::regex_search(_filename, std::regex("\\(R_.*\\)")))
+    {
+        _filename = std::regex_replace(_filename, std::regex(" \\(R_.*\\)"), "");
+        filename = _filename.c_str();
+    }
+
+    CString newFileName = filename;
+    newFileName.Insert(filename.GetLength() - 4, tag);
+    return newFileName;
+}
+
+bool CPlayerPlaylistBar::RateFileInPlaylist(POSITION pos, int rating)
+{
+    CString filename = m_pl.GetAt(pos).m_fns.GetHead();
+    m_pMainFrame->OnNavigateSkipFile(ID_NAVIGATE_SKIPFORWARDFILE);
+    CString ratingStr;
+    if (rating == -1)
+        ratingStr.Format(_T(" __(delete)__"), rating);
+    else
+        ratingStr.Format(_T(" (R_%i)"), rating);
+    CString newFilename = getTaggedFileName(filename, ratingStr);
+    int result = MoveFile(filename, newFilename);
+    if (result == 0)
+    {
+        wchar_t buf[256];
+        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(),
+            0, buf, 256, NULL);
+        CString strTemp;
+        strTemp.Format(_T("%s -> %s | %i | %i | %s"), filename, newFilename, result, GetLastError(), buf);
+        AfxMessageBox(strTemp);
+    }
+    return true;
+}
+
+
+
+
 bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
 {
+    return RateFileInPlaylist(pos, -1);
     bool isplaying = false;
     bool folderPlayNext = (m_pl.GetCount() == 1 && AfxGetAppSettings().eAfterPlayback == CAppSettings::AfterPlayback::PLAY_NEXT); //only one item in pl, so we are looping by folder, not pl
     if (pos == m_pl.GetPos()) {
@@ -1222,9 +1266,7 @@ bool CPlayerPlaylistBar::DeleteFileInPlaylist(POSITION pos, bool recycle)
             m_pl.GetNext(nextpos);
         }
         // remove selected from playlist
-        int listPos = FindItem(pos);
-        m_list.DeleteItem(listPos);
-        m_list.RedrawItems(listPos, m_list.GetItemCount() - 1);
+        m_list.DeleteItem(FindItem(pos));
         m_pl.RemoveAt(pos);
         SavePlaylist();
         if (isplaying) {

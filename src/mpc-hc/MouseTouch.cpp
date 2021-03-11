@@ -314,7 +314,7 @@ void CMouse::InternalOnLButtonDown(UINT nFlags, const CPoint& point)
         return ret;
     };
 
-    m_drag = (!onButton() && !bIsOnFS) ? Drag::BEGIN_DRAG : Drag::NO_DRAG;
+    m_drag = (!onButton()) ? Drag::BEGIN_DRAG : Drag::NO_DRAG;
     if (m_drag == Drag::BEGIN_DRAG) {
         GetWnd().SetCapture();
         m_beginDragPoint = point;
@@ -473,18 +473,21 @@ void CMouse::SetCursor(const CPoint& screenPoint)
     SetCursor(GetMouseFlags(), screenPoint, clientPoint);
 }
 
+double baseX;
+double baseY;
+
 bool CMouse::TestDrag(const CPoint& screenPoint)
 {
     bool ret = false;
     if (m_drag == Drag::BEGIN_DRAG) {
-        ASSERT(!IsOnFullscreenWindow());
+        //ASSERT(!IsOnFullscreenWindow());
         bool checkDrag = true;
         if (m_pMainFrame->IsZoomed()) {
             CRect r;
             GetWnd().GetWindowRect(r);
             int maxDim = std::max(r.Width(), r.Height()) / 10;
             CPoint diff = screenPoint - m_beginDragPoint;
-            checkDrag = (diff.x * diff.x + diff.y * diff.y) > maxDim*maxDim; //if dragged 10% screen maxDim start dragging
+            checkDrag = (diff.x * diff.x + diff.y * diff.y) > 2 * 2; //if dragged 10% screen maxDim start dragging
         }
 
         if (checkDrag) {
@@ -493,14 +496,15 @@ bool CMouse::TestDrag(const CPoint& screenPoint)
                 (bUpAssigned && !PointEqualsImprecise(screenPoint, m_beginDragPoint,
                     GetSystemMetrics(SM_CXDRAG), GetSystemMetrics(SM_CYDRAG)))) {
                 VERIFY(ReleaseCapture());
-                m_pMainFrame->PostMessage(WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM(m_beginDragPoint.x, m_beginDragPoint.y));
+                if (!IsOnFullscreenWindow())
+                    m_pMainFrame->PostMessage(WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM(m_beginDragPoint.x, m_beginDragPoint.y));
                 m_drag = Drag::DRAGGED;
+                baseX = m_pMainFrame->m_PosX;
+                baseY = m_pMainFrame->m_PosY;
                 m_bLeftDown = false;
                 ret = true;
             }
         }
-    } else {
-        m_drag = Drag::NO_DRAG;
     }
     return ret;
 }
@@ -524,6 +528,20 @@ void CMouse::InternalOnMouseMove(UINT nFlags, const CPoint& point)
     }
 
     m_pMainFrame->UpdateControlState(CMainFrame::UPDATE_CONTROLS_VISIBILITY);
+
+    if (Dragging() && IsOnFullscreenWindow())
+    {
+        CPoint diff = screenPoint - m_beginDragPoint;
+        m_pMainFrame->m_PosX = baseX + diff.x * 0.0001 * m_pMainFrame->m_ZoomX;
+        double accel = 1.0;
+        if (m_pMainFrame->m_ZoomY > 2.8 && m_pMainFrame->m_ZoomY < 3.2)
+            accel = 4.0;
+        if (m_pMainFrame->m_ZoomY < 3.0)
+            m_pMainFrame->m_PosY = baseY + diff.y * accel * 0.0003 * m_pMainFrame->m_ZoomY;
+        else
+            m_pMainFrame->m_PosY = baseY - diff.y * accel * 0.0003 * m_pMainFrame->m_ZoomY;
+        m_pMainFrame->MoveVideoWindow(true);
+    }
 }
 
 void CMouse::InternalOnMouseLeave()

@@ -3995,6 +3995,20 @@ BEGIN
                             "Use title in recent file list."
 END
 
+STRINGTABLE
+BEGIN
+IDS_RATE_0				"Rate 0"
+IDS_RATE_1				"Rate 1"
+IDS_RATE_2				"Rate 2"
+IDS_RATE_3				"Rate 3"
+IDS_RATE_4				"Rate 4"
+IDS_RATE_5				"Rate 5"
+IDS_RATE_6				"Rate 6"
+IDS_RATE_7				"Rate 7"
+IDS_RATE_8				"Rate 8"
+IDS_RATE_9				"Rate 9"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

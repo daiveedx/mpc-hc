@@ -825,6 +825,18 @@ public:
     afx_msg void OnFileOpenOpticalDisk(UINT nID);
     afx_msg void OnFileReopen();
     afx_msg void OnFileRecycle();
+
+    afx_msg void OnRate0();
+    afx_msg void OnRate1();
+    afx_msg void OnRate2();
+    afx_msg void OnRate3();
+    afx_msg void OnRate4();
+    afx_msg void OnRate5();
+    afx_msg void OnRate6();
+    afx_msg void OnRate7();
+    afx_msg void OnRate8();
+    afx_msg void OnRate9();
+
     afx_msg void OnFileSaveAs();
     afx_msg void OnUpdateFileSaveAs(CCmdUI* pCmdUI);
     afx_msg void OnFileSaveImage();

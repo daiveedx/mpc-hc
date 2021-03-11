@@ -266,6 +266,18 @@
 #define ID_PANSCAN_ROTATEZ270           997
 #define ID_PRESIZE_SHADERS_TOGGLE       998
 #define ID_POSTSIZE_SHADERS_TOGGLE      999
+
+#define ID_RATE_0		                1000
+#define ID_RATE_1		                1001
+#define ID_RATE_2		                1002
+#define ID_RATE_3		                1003
+#define ID_RATE_4		                1004
+#define ID_RATE_5		                1005
+#define ID_RATE_6		                1006
+#define ID_RATE_7		                1007
+#define ID_RATE_8		                1008
+#define ID_RATE_9		                1009
+
 #define ID_FILTERS_COPY_TO_CLIPBOARD    1999
 #define ID_FILTERS_SUBITEM_START        2000
 #define ID_FILTERS_SUBITEM_END          2099
@@ -1655,6 +1667,17 @@
 #define IDS_PPAGEADVANCED_SHOW_FPS_STATUSBAR 57569
 #define IDS_PPAGEADVANCED_ADD_LANGCODE_WHEN_SAVE_SUBTITLES 57570
 #define IDS_PPAGEADVANCED_USE_TITLE_IN_RECENT_FILE_LIST 57571
+
+#define IDS_RATE_0		            58000
+#define IDS_RATE_1		            58001
+#define IDS_RATE_2		            58002
+#define IDS_RATE_3		            58003
+#define IDS_RATE_4		            58004
+#define IDS_RATE_5		            58005
+#define IDS_RATE_6		            58006
+#define IDS_RATE_7		            58007
+#define IDS_RATE_8		            58008
+#define IDS_RATE_9		            58009
 
 
 // Next default values for new objects

@@ -568,6 +568,18 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_WM_DRAWITEM()
     ON_WM_SETTINGCHANGE()
     ON_WM_MOUSEHWHEEL()
+
+    ON_COMMAND(ID_RATE_0, OnRate0)
+    ON_COMMAND(ID_RATE_1, OnRate1)
+    ON_COMMAND(ID_RATE_2, OnRate2)
+    ON_COMMAND(ID_RATE_3, OnRate3)
+    ON_COMMAND(ID_RATE_4, OnRate4)
+    ON_COMMAND(ID_RATE_5, OnRate5)
+    ON_COMMAND(ID_RATE_6, OnRate6)
+    ON_COMMAND(ID_RATE_7, OnRate7)
+    ON_COMMAND(ID_RATE_8, OnRate8)
+    ON_COMMAND(ID_RATE_9, OnRate9)
+
 END_MESSAGE_MAP()
 
 #ifdef _DEBUG
@@ -4639,6 +4651,95 @@ void CMainFrame::OnFileRecycle()
     m_wndPlaylistBar.DeleteFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos());
 }
 
+void CMainFrame::OnRate0()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 0);
+}
+
+void CMainFrame::OnRate1()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 1);
+}
+
+void CMainFrame::OnRate2()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 2);
+}
+
+void CMainFrame::OnRate3()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 3);
+}
+
+void CMainFrame::OnRate4()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 4);
+}
+
+void CMainFrame::OnRate5()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 5);
+}
+
+void CMainFrame::OnRate6()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 6);
+}
+
+void CMainFrame::OnRate7()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 7);
+}
+void CMainFrame::OnRate8()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 8);
+}
+
+void CMainFrame::OnRate9()
+{
+    // check if a file is playing
+    if (GetPlaybackMode() != PM_FILE) {
+        return;
+    }
+    m_wndPlaylistBar.RateFileInPlaylist(m_wndPlaylistBar.m_pl.GetPos(), 9);
+}
+
 void CMainFrame::OnFileReopen()
 {
     if (!m_LastOpenBDPath.IsEmpty() && OpenBD(m_LastOpenBDPath)) {
@@ -7395,28 +7496,32 @@ void CMainFrame::OnViewPanNScan(UINT nID)
             break;
     }
 
-    if (x > 0 && m_ZoomX < 5.0) {
-        m_ZoomX = std::min(m_ZoomX * 1.02, 5.0);
-    } else if (x < 0 && m_ZoomX > 0.2) {
-        m_ZoomX = std::max(m_ZoomX / 1.02, 0.2);
+    if (x > 0) {
+        m_ZoomX = m_ZoomX * 1.02;
+    }
+    else if (x < 0) {
+        m_ZoomX = m_ZoomX / 1.02;
     }
 
-    if (y > 0 && m_ZoomY < 5.0) {
-        m_ZoomY = std::min(m_ZoomY * 1.02, 5.0);
-    } else if (y < 0 && m_ZoomY > 0.2) {
-        m_ZoomY = std::max(m_ZoomY / 1.02, 0.2);
+    if (y > 0) {
+        m_ZoomY = m_ZoomY * 1.02;
+    }
+    else if (y < 0) {
+        m_ZoomY = m_ZoomY / 1.02;
     }
 
-    if (dx < 0 && m_PosX > -0.5) {
-        m_PosX = std::max(m_PosX - 0.005 * m_ZoomX, -0.5);
-    } else if (dx > 0 && m_PosX < 1.5) {
-        m_PosX = std::min(m_PosX + 0.005 * m_ZoomX, 1.5);
+    if (dx < 0) {
+        m_PosX = m_PosX - 0.005 * m_ZoomX;
+    }
+    else if (dx > 0) {
+        m_PosX = m_PosX + 0.005 * m_ZoomX;
     }
 
-    if (dy < 0 && m_PosY > -0.5) {
-        m_PosY = std::max(m_PosY - 0.005 * m_ZoomY, -0.5);
-    } else if (dy > 0 && m_PosY < 1.5) {
-        m_PosY = std::min(m_PosY + 0.005 * m_ZoomY, 1.5);
+    if (dy < 0) {
+        m_PosY = m_PosY - 0.005 * m_ZoomY;
+    }
+    else if (dy > 0 && m_PosY < 1.5) {
+        m_PosY = m_PosY + 0.005 * m_ZoomY;
     }
 
     MoveVideoWindow(true);
@@ -8283,6 +8388,7 @@ void CMainFrame::SetPlayingRate(double rate)
     }
     HRESULT hr = E_FAIL;
     if (GetPlaybackMode() == PM_FILE) {
+        /*
         if (rate < 0.05) {
             if (m_dSpeedRate > 0.05) {
                 rate = 0.05;
@@ -8290,6 +8396,7 @@ void CMainFrame::SetPlayingRate(double rate)
                 return;
             }
         }
+        */
         if (GetMediaState() != State_Running) {
             SendMessage(WM_COMMAND, ID_PLAY_PLAY);
         }
@@ -8454,7 +8561,7 @@ void CMainFrame::OnUpdatePlayChangeRate(CCmdUI* pCmdUI)
             fEnable = true;
             if (fInc && m_dSpeedRate >= 128.0) {
                 fEnable = false;
-            } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate <= 0.05) {
+            } else if (!fInc && GetPlaybackMode() == PM_FILE && m_dSpeedRate <= 0) {
                 fEnable = false;
             } else if (!fInc && GetPlaybackMode() == PM_DVD && m_dSpeedRate <= -128.0) {
                 fEnable = false;
@@ -11917,9 +12024,6 @@ HRESULT CMainFrame::PreviewWindowHide() {
 
         m_wndPreView.ShowWindow(SW_HIDE);
         m_wndPreView.SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-        if (AfxGetAppSettings().iOnTop) {
-            SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-        }
 
         // Enable animation
         AnimationInfo.iMinAnimate = WindowAnimationType;

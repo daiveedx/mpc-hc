@@ -657,7 +657,18 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_EDL_IN,                            0, FVIRTKEY | FNOINVERT,                    IDS_AG_EDL_IN },
     { ID_EDL_OUT,                           0, FVIRTKEY | FNOINVERT,                    IDS_AG_EDL_OUT },
     { ID_EDL_NEWCLIP,                       0, FVIRTKEY | FNOINVERT,                    IDS_AG_EDL_NEW_CLIP },
-    { ID_EDL_SAVE,                          0, FVIRTKEY | FNOINVERT,                    IDS_AG_EDL_SAVE }
+    { ID_EDL_SAVE,                          0, FVIRTKEY | FNOINVERT,                    IDS_AG_EDL_SAVE },
+
+    { ID_RATE_0,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_0 },
+    { ID_RATE_1,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_1 },
+    { ID_RATE_2,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_2 },
+    { ID_RATE_3,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_3 },
+    { ID_RATE_4,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_4 },
+    { ID_RATE_5,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_5 },
+    { ID_RATE_6,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_6 },
+    { ID_RATE_7,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_7 },
+    { ID_RATE_8,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_8 },
+    { ID_RATE_9,							0, FVIRTKEY | FNOINVERT,					IDS_RATE_9 }
 };
 
 void CAppSettings::CreateCommands()
